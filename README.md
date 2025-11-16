@@ -31,11 +31,6 @@ Installation
 Note: For consistency, name the plugin file `akrofolis-<version>.jar`.
 
 -----
-
-Configuration
-- On first startup the plugin writes default config files to `plugins/AkroFolis/`: `config.yml`, `messages.yml`, `commands.yml`, `data.yml`.
-- Edit `config.yml` to enable/disable modules and change settings.
-
 Commands
 - All plugin commands are registered under the `/akrofolis` prefix (for example `/akrofolis:fly`, `/akrofolis:lobby`).
 - Legacy aliases (like `/akropolis`) can be kept or removed — see `commands.yml`.
