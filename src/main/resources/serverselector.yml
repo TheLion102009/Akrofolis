@@ -1,9 +1,9 @@
-#     _    _                          _ _
-#    / \  | | ___ __ ___  _ __   ___ | (_)___
-#   / _ \ | |/ / '__/ _ \| '_ \ / _ \| | / __|
-#  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
-# /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
-#                        |_|
+#     _    _              ______
+#    / \  | | ___ __ ___ |  ___| ___ (_)   ___
+#   / _ \ | |/ / '__/ _ \| |___ / _ \| | / __|
+#  / ___ \|   <| | | (_) |  ___| (_)|| | \__ \
+# /_/   \_\_|\_\_|  \___/|_|   \___/|_|_|___/
+#
 #--------
 # SERVER SELECTOR GUI:
 #
@@ -51,7 +51,7 @@
 #   [GAMEMODE] <gamemode> - Change a players' gamemode
 #   [SERVER] <server> - Send a player to a server
 #   [EFFECT] <effect;level>- Give a potion effect
-#   [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+#   [MENU] <menu> - Open a menu from (plugins/Akrofolis/menus)
 #   [CLOSE] - Close an open inventory
 #--------
 # MESSAGE FORMATTING:

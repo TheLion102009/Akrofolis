@@ -1,13 +1,13 @@
-#     _    _                          _ _
-#    / \  | | ___ __ ___  _ __   ___ | (_)___
-#   / _ \ | |/ / '__/ _ \| '_ \ / _ \| | / __|
-#  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
-# /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
-#                        |_|
+#     _    _              ______
+#    / \  | | ___ __ ___ |  ___| ___ (_)   ___
+#   / _ \ | |/ / '__/ _ \| |___ / _ \| | / __|
+#  / ___ \|   <| | | (_) |  ___| (_)|| | \__ \
+# /_/   \_\_|\_\_|  \___/|_|   \___/|_|_|___/
+#
 #--------
 # CUSTOM MENUS:
 #
-#   You can add more menus to the "Akropolis/menus" directory,
+#   You can add more menus to the "Akrofolis/menus" directory,
 #   copy and paste the default, server selector, menu and edit the file.
 #   Use the name of the file as the action ID.
 #--------
@@ -25,7 +25,7 @@
 #   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
 #   Example: <papi:luckperms_prefix>
 #
-#   If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
+#   If you prefer a more modern alternative to PlaceholderAPI, Akrofolis is also compatible with MiniPlaceholders
 #   by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
 #   For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
 #--------
@@ -41,7 +41,7 @@
 #   [GAMEMODE] <gamemode> - Change a players' gamemode
 #   [SERVER] <server> - Send a player to a server
 #   [EFFECT] <effect;level>- Give a potion effect
-#   [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+#   [MENU] <menu> - Open a menu from (plugins/Akrofolis/menus)
 #   [CLOSE] - Close an open inventory
 #--------
 # MESSAGE FORMATTING:
@@ -58,7 +58,7 @@
 # | GENERAL SETTINGS                         |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# List your worlds you don't want Akropolis to manage.
+# List your worlds you don't want Akrofolis to manage.
 disabled-worlds:
   # Should we invert the list making it a whitelist rather than a blacklist?
   invert: false
@@ -76,14 +76,14 @@ anti_wdl:
   # Should AntiWDL be enabled?
   enabled: true
 
-  # Should players with 'akropolis.antiwdl.alert' will be notified?
+  # Should players with 'Akrofolis.antiwdl.alert' will be notified?
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SONG PLAYER                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
+# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akrofolis/music"
 # directory.
 song_player:
   # Should we play music in the lobby?
@@ -152,7 +152,7 @@ scoreboard:
     enabled: true
     rate: 200 # In ticks (20 ticks = 1 second).
 
-  title: "<gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>)"
+  title: "<gold><b>Akrofolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>)"
   lines:
     - ""
     - "<dark_gray>» <gray>Player<dark_gray>: <yellow><player>"
@@ -176,7 +176,7 @@ tablist:
   # Modify the header of the tablist.
   header:
     - ""
-    - "<dark_gray>» <gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>) <dark_gray>«"
+    - "<dark_gray>» <gold><b>Akrofolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>) <dark_gray>«"
     - ""
 
   # Modify the footer of the tablist.
@@ -211,7 +211,7 @@ announcements:
     test1:
       - "<reset>"
       - "<blue><b>INFORMATION"
-      - "<click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>"
+      - "<click:open_url:'https://github.com/devblook/Akrofolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>"
       - "<reset>"
     test2:
       - "<reset>"
@@ -255,7 +255,7 @@ boss_bar_announcements:
     pitch: 1.0
 
   announcements:
-    - "<blue><b>THIS SERVER USES AKROPOLIS"
+    - "<blue><b>THIS SERVER USES Akrofolis"
     - "<gold><b>NOW WITH BOSS BAR ANNOUNCEMENTS!"
     - "<gradient:green:blue><b>MINIMESSAGE SUPPORT!"
 
@@ -285,7 +285,7 @@ launchpad:
 # | PLAYER MOUNT                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Players with the akropolis.player.mount will be able to mount other players.
+# Players with the Akrofolis.player.mount will be able to mount other players.
 player_mount:
   # Should the player mount feature be enabled?
   enabled: false
@@ -337,9 +337,9 @@ fly:
 groups:
   # Create all the group formats you want following the same template.
   # To use any of these formats, the player must have the permission
-  # akropolis.chat.group.<group name>
+  # Akrofolis.chat.group.<group name>
 
-  # If you want to disable this feature temporally, just deny the akropolis.chat.group.default
+  # If you want to disable this feature temporally, just deny the Akrofolis.chat.group.default
   # permission in LuckPerms or whichever permission management plugin you use. Otherwise, use the option below.
   enabled: false
 
@@ -349,7 +349,7 @@ groups:
     # Just in case you want to slow down your players a little.
     cooldown:
       time: 3 # Time is in seconds.
-      message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+      message: "<gold><b>Akrofolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
     # Add all the emojis you want here.
     emojis:
       smile:
@@ -368,7 +368,7 @@ groups:
     # You can use the cooldown feature everywhere you want!
     cooldown:
       time: 1 # Time is in seconds.
-      message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+      message: "<gold><b>Akrofolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
     # These emojis will only be available for the VIP group.
     emojis:
       tableflip:
@@ -458,7 +458,7 @@ world_settings:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 join_leave_messages:
-  # Should Akropolis handle join/quit messages?
+  # Should Akrofolis handle join/quit messages?
   enabled: true
 
   # Set to '' if you want silent join/quit messages.
@@ -475,7 +475,7 @@ join_events:
   - "[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>store.example.com"
   - "[MESSAGE] <dark_gray>» <gray>Discord<dark_gray>: <yellow>discord.example.com"
   - "[MESSAGE] <reset>"
-  - "[MESSAGE]             <gray><i>Powered by Akropolis"
+  - "[MESSAGE]             <gray><i>Powered by Akrofolis"
   - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
   - "[TITLE] <yellow><b>WELCOME;<white><player>;1;2;1"
   - "[SOUND] ENTITY_PLAYER_LEVELUP"

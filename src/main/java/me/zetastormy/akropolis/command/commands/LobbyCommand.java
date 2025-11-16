@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -30,6 +30,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class LobbyCommand extends InjectableCommand {
@@ -53,7 +54,8 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleportAsync(location), 3L);
+        Player player = (Player) sender;
+        SchedulerWrapper.runTaskLater(plugin, player, () -> player.teleportAsync(location), 3L);
 
     }
 }

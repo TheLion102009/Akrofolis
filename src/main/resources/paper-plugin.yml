@@ -1,8 +1,9 @@
-name: Akropolis
-authors: [ZetaStormy, ItsLewizzz]
+name: AkroFolis
+authors: [ZetaStormy, Thelion102009]
 version: ${version}
-description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz.
+description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz. Fully compatible with Paper & Folia 1.21.x
 api-version: "1.21"
+folia-supported: true
 main: me.zetastormy.akropolis.AkropolisPlugin
 loader: me.zetastormy.akropolis.AkropolisPluginLoader
 
@@ -28,61 +29,61 @@ dependencies:
       required: false
 
 permissions:
-  akropolis.*:
-    description: Gives access to all Akropolis permissions
+  akrofolis.*:
+    description: Gives access to all Akrofolis permissions
     children:
-      akropolis.command.*: true
-      akropolis.bypass.*: true
-      akropolis.alert.*: true
-      akropolis.item.*: true
-      akropolis.player.*: true
-      akropolis.block.*: true
-  akropolis.command.*:
+      akrofolis.command.*: true
+      akrofolis.bypass.*: true
+      akrofolis.alert.*: true
+      akrofolis.item.*: true
+      akrofolis.player.*: true
+      akrofolis.block.*: true
+  akrofolis.command.*:
     description: Gives access to all command permissions
     children:
-      akropolis.command.help: true
-      akropolis.command.reload: true
-      akropolis.command.scoreboard: true
-      akropolis.command.openmenu: true
-      akropolis.command.holograms: true
-      akropolis.command.gamemode: true
-      akropolis.command.gamemode.others: true
-      akropolis.command.clearchat: true
-      akropolis.command.lockchat: true
-      akropolis.command.fly: true
-      akropolis.command.fly.others: true
-      akropolis.command.setlobby: true
-      akropolis.command.vanish: true
-      akropolis.command.songplayer: true
-  akropolis.bypass.*:
+      akrofolis.command.help: true
+      akrofolis.command.reload: true
+      akrofolis.command.scoreboard: true
+      akrofolis.command.openmenu: true
+      akrofolis.command.holograms: true
+      akrofolis.command.gamemode: true
+      akrofolis.command.gamemode.others: true
+      akrofolis.command.clearchat: true
+      akrofolis.command.lockchat: true
+      akrofolis.command.fly: true
+      akrofolis.command.fly.others: true
+      akrofolis.command.setlobby: true
+      akrofolis.command.vanish: true
+      akrofolis.command.songplayer: true
+  akrofolis.bypass.*:
     description: Gives access to all bypass permissions
     children:
-      akropolis.bypass.antiswear: true
-      akropolis.bypass.commands: true
-      akropolis.bypass.lockchat: true
-      akropolis.bypass.antiwdl: true
-      akropolis.bypass.doublejump: false
-  akropolis.alert.*:
+      akrofolis.bypass.antiswear: true
+      akrofolis.bypass.commands: true
+      akrofolis.bypass.lockchat: true
+      akrofolis.bypass.antiwdl: true
+      akrofolis.bypass.doublejump: false
+  akrofolis.alert.*:
     description: Gives access to all alert permissions
     children:
-      akropolis.alert.antiswear: true
-      akropolis.alert.antiwdl: true
-  akropolis.item.*:
+      akrofolis.alert.antiswear: true
+      akrofolis.alert.antiwdl: true
+  akrofolis.item.*:
     description: Gives access to all item based permissions
     children:
-      akropolis.item.drop: true
-      akropolis.item.pickup: true
-  akropolis.player.*:
+      akrofolis.item.drop: true
+      akrofolis.item.pickup: true
+  akrofolis.player.*:
     description: Gives access to all player based permissions
     children:
-      akropolis.player.pvp: true
-  akropolis.block.*:
+      akrofolis.player.pvp: true
+  akrofolis.block.*:
     description: Gives access to all block based permissions
     children:
-      akropolis.block.break: true
-      akropolis.block.place: true
-      akropolis.block.interact: true
-  akropolis.chat.group.*:
+      akrofolis.block.break: true
+      akrofolis.block.place: true
+      akrofolis.block.interact: true
+  akrofolis.chat.group.*:
     description: Determines which chat format and cooldown time should be used
     children:
-      akropolis.chat.group.default: true
+      akrofolis.chat.group.default: true

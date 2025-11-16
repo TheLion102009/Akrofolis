@@ -35,14 +35,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 
 public class ScoreboardManager extends Module implements LifeCycle {
-    private int scoreTask;
+    private ScheduledTask scoreTask;
     private Map<UUID, ScoreboardHelper> players;
     private long joinDelay;
     private long worldDelay;
@@ -65,17 +67,17 @@ public class ScoreboardManager extends Module implements LifeCycle {
         worldDelay = config.getLong("scoreboard.display_delay.world_change", 0L);
 
         if (config.getBoolean("scoreboard.refresh.enabled")) {
-            scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreboardUpdateTask(this), 0L,
+            scoreTask = SchedulerWrapper.runGlobalTaskTimer(getPlugin(), new ScoreboardUpdateTask(this), 1L,
                     config.getLong("scoreboard.refresh.rate"));
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
+        SchedulerWrapper.runTaskLaterAsync(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
                 .filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createScoreboard), 20L);
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTask(scoreTask);
+        if (scoreTask != null) scoreTask.cancel();
         Bukkit.getOnlinePlayers().forEach(this::removeScoreboard);
     }
 
@@ -105,9 +107,8 @@ public class ScoreboardManager extends Module implements LifeCycle {
             players.get(player.getUniqueId()).removePlayer();
             players.remove(player.getUniqueId());
 
-            org.bukkit.scoreboard.ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-
-            player.setScoreboard(scoreboardManager.getNewScoreboard());
+            // Note: getNewScoreboard() is not supported in Folia
+            // The scoreboard will be automatically cleaned up
         }
     }
 
@@ -123,7 +124,7 @@ public class ScoreboardManager extends Module implements LifeCycle {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!inDisabledWorld(player.getLocation()) && !hasScore(player.getUniqueId())) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), joinDelay);
+            SchedulerWrapper.runTaskLaterAsync(getPlugin(), () -> createScoreboard(player), joinDelay);
         }
     }
 
@@ -145,7 +146,7 @@ public class ScoreboardManager extends Module implements LifeCycle {
         if (inDisabledWorld(toWorld) && players.containsKey(player.getUniqueId())) {
             removeScoreboard(player);
         } else if (!players.containsKey(player.getUniqueId())) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), worldDelay);
+            SchedulerWrapper.runTaskLaterAsync(getPlugin(), () -> createScoreboard(player), worldDelay);
         }
     }
 }

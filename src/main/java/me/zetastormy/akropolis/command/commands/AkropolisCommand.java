@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -51,7 +51,7 @@ public class AkropolisCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
 
     public AkropolisCommand(AkropolisPlugin plugin) {
-        super(plugin, "akropolis", "View plugin information and additional commands", Collections.singletonList("akro"));
+        super(plugin, "akrofolis", "View plugin information and additional commands", Collections.singletonList("akrofo"));
         this.plugin = plugin;
     }
 

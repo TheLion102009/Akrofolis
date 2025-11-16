@@ -1,55 +1,88 @@
-![Akropolis banner](https://user-images.githubusercontent.com/56933557/188349705-b1f1eb56-8e4b-42d2-b99d-f21552ec84c2.png)
+# AkroFolis
 
-Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizzz.
-It contains almost all of its features and configuration files are almost the same, so you can just
-drop your configuration into the plugin's directory, make a few modifications and use it.
+AkroFolis (fork of Akropolis) — a modern hub/lobby plugin for Minecraft servers, fully compatible with Paper & Folia (API 1.21.x).
 
-The main difference between Akropolis and DeluxeHub is that Akropolis uses more modern technologies, like MiniMessage,
-the Paper API and updated Java versions. While this give us some performance and usability benefits, it also means
-that we won't be giving support to older versions of Minecraft and other Minecraft server software that isn't derivated
-from Paper, which is not the case of DeluxeHub.
-Simply use what you feel meets your needs.
+In short: AkroFolis provides a lightweight, modular hub with menus, scoreboards, holograms, nametags, vanish, hotbar items and more — optimized for Paper & Folia 1.21.0–1.21.10.
 
-## How to
+-----
 
-### Install
+Features
+- Full compatibility with Paper & Folia API 1.21.x (1.21.0 through 1.21.10)
+- Modular design: enable or disable modules (Scoreboard, Nametags, Holograms, Lobby, Vanish, etc.)
+- Hooks: PlaceholderAPI support and optional integrations for scoreboard libraries and other services
+- Menu system and server selector
+- Configurable via `config.yml`, `messages.yml`, `commands.yml`, `data.yml`
+- Folia-aware scheduler wrapper: uses region/global schedulers on Folia and falls back to paper schedulers when needed
+- Open source and easy to fork or extend
 
-To use this plugin just a grab a binary from the [releases page](https://github.com/devblook/akropolis/releases)
-or [compile it](#compile) yourself and drop it into your `plugins/` directory. Take in mind that you will need to be
-running Paper 1.21+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
+-----
 
-### Compile
+Installation
+1. Build the plugin with Gradle (in project root):
 
-Compiling Akropolis is pretty simple, just one command, and you're ready to go:
+   Windows (Powershell):
+   .\gradlew.bat clean shadowJar
 
-**Linux (and other UNIX derivatives):**
+   The produced JAR will be located in `build/libs/` (for example `akrofolis-<version>.jar`).
 
-```bash
-./gradlew shadowJar
-```
+2. Copy the JAR to your server's `plugins/` folder.
+3. Start the server (Paper or Folia, 1.21.x).
 
-**Windows:**
+Note: For consistency, name the plugin file `akrofolis-<version>.jar`.
 
-```batch
-gradlew.bat shadowJar
-```
+-----
 
-Then you will find the binary under the `build/libs/` directory.
+Configuration
+- On first startup the plugin writes default config files to `plugins/AkroFolis/`: `config.yml`, `messages.yml`, `commands.yml`, `data.yml`.
+- Edit `config.yml` to enable/disable modules and change settings.
 
-### Report bugs or request features
+Commands
+- All plugin commands are registered under the `/akrofolis` prefix (for example `/akrofolis:fly`, `/akrofolis:lobby`).
+- Legacy aliases (like `/akropolis`) can be kept or removed — see `commands.yml`.
 
-Reporting a bug or requesting a feature can be useful for further development of the plugin. To do that you just need
-to fill one of the issue templates we made for you:
-[Click here to report a bug](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=bug&template=bug_report.yml&title=A+brief+description+of+your+report)
-or [click here to request a feature](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request).
+API & Compatibility
+- Supports Paper & Folia API 1.21.x (1.21.0–1.21.10).
+- Internally uses a `SchedulerWrapper` to choose the best scheduler implementation available (Folia region/global scheduler or Paper sync scheduler).
+- If you encounter scheduler-related errors (e.g. UnsupportedOperationException), make sure you run a Folia/Paper build that includes threaded regions and that external dependencies are present.
 
-### Contribute
+Dependencies
+- PlaceholderAPI (recommended for placeholder support)
+- Optional: scoreboard libraries or additional plugins; those may be declared as provided in `build.gradle.kts` and must be available at runtime if not shaded.
 
-At the moment we don't have a lot of requirements to contribute, just make sure to clarify
-the features or fixes that you introduce in your pull request and try to follow the
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+Troubleshooting
+- UnsupportedOperationException when scheduling tasks on Folia: verify that `SchedulerWrapper` selects a Folia scheduler and that your server distribution supports threaded regions.
+- `zip file closed` errors: remove duplicate or stale plugin JARs from `plugins/` and ensure the plugin JAR is not corrupted.
+- ClassNotFoundException for external libraries: either shade the dependency into the plugin JAR or place the dependency JAR in `plugins/`.
+- Module startup failures: check server logs for missing hooks, uninitialized state (NPEs), or scheduler conflicts.
 
-## License
+Development & Contributing
+- Fork the repository and create feature branches for changes.
+- Open pull requests with a clear description and tests when possible.
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for
-details.
+Build (developer)
+- Use the included Gradle wrapper:
+
+   Windows (Powershell):
+   .\gradlew.bat clean shadowJar
+
+- Output: `build/libs/akrofolis-<version>.jar`.
+
+Naming & Branding
+- The plugin identifies as "AkroFolis" (capital F) in logs and plugin metadata.
+- ASCII banner, plugin YAML entries and code references should reflect the new name and branding where appropriate.
+
+License
+- See the `LICENSE` file in the repository.
+
+Contact
+- Open issues and pull requests in the GitHub repository.
+- For larger integrations (like third-party scoreboard libraries) please open an issue first to coordinate.
+
+-----
+
+Changelog (short)
+- 1.9.3 — AkroFolis fork: Paper & Folia 1.21.x compatibility, branding updates, scheduler improvements, various bugfixes.
+
+-----
+
+Thanks for using AkroFolis! If you want, I can also add a CONTRIBUTING.md, issue/PR templates, or badges for build status and license.

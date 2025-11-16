@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -32,16 +32,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 
 public class TablistManager extends Module implements LifeCycle{
     private List<UUID> players;
-    private int tablistTask;
+    private ScheduledTask tablistTask;
     private String header;
     private String footer;
 
@@ -59,20 +61,19 @@ public class TablistManager extends Module implements LifeCycle{
         footer = String.join("\n", config.getStringList("tablist.footer"));
 
         if (config.getBoolean("tablist.refresh.enabled")) {
-            tablistTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new TablistUpdateTask(this), 0L,
+            tablistTask = SchedulerWrapper.runGlobalTaskTimer(getPlugin(), new TablistUpdateTask(this), 1L,
                     config.getLong("tablist.refresh.rate"));
         }
 
-        getPlugin().getServer().getScheduler()
-                .scheduleSyncDelayedTask(getPlugin(),
-                        () -> Bukkit.getOnlinePlayers().stream()
-                                .filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createTablist),
-                        20L);
+        SchedulerWrapper.runGlobalTaskLater(getPlugin(),
+                () -> Bukkit.getOnlinePlayers().stream()
+                        .filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createTablist),
+                20L);
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTask(tablistTask);
+        if (tablistTask != null) tablistTask.cancel();
         Bukkit.getOnlinePlayers().forEach(this::removeTablist);
     }
 

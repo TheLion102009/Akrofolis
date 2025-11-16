@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -46,6 +46,7 @@ import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
@@ -148,7 +149,7 @@ public class PlayerListener extends Module implements LifeCycle {
         // Clear the player inventory
         if (clearInventory) player.getInventory().clear();
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
+        SchedulerWrapper.runTaskLater(getPlugin(), player, () -> {
             // Join events
             executeActions(player, joinActions);
 

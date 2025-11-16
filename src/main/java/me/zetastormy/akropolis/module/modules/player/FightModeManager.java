@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -34,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
@@ -41,10 +42,11 @@ import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import net.kyori.adventure.text.Component;
 
 public class FightModeManager extends Module implements LifeCycle {
-    private final Map<UUID, Integer> holdTasks;
+    private final Map<UUID, ScheduledTask> holdTasks;
     private final Map<UUID, Integer> holdTimers;
     private final Set<UUID> fighters;
     private ItemStack helmet;
@@ -101,7 +103,7 @@ public class FightModeManager extends Module implements LifeCycle {
         UUID playerUuid = player.getUniqueId();
         holdTimers.put(playerUuid, 0);
 
-        int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), () -> {
+        ScheduledTask task = SchedulerWrapper.runTaskTimer(getPlugin(), player, () -> {
             int time = holdTimers.get(playerUuid);
             ItemStack currentItem = player.getInventory().getItemInMainHand();
 
@@ -121,9 +123,9 @@ public class FightModeManager extends Module implements LifeCycle {
             executeActions(player, countdownActions);
             Message.FIGHT_MODE_ACTIVATE_DELAY.sendWithReplacement(player, "seconds", timeLeft);
             holdTimers.put(playerUuid, time + 1);
-        }, 0L, 20L);
+        }, 1L, 20L);
 
-        holdTasks.put(playerUuid, taskId);
+        holdTasks.put(playerUuid, task);
     }
 
     public void startDeactivationTimer(Player player) {
@@ -131,7 +133,7 @@ public class FightModeManager extends Module implements LifeCycle {
 
         holdTimers.put(playerUuid, 0);
 
-        int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), () -> {
+        ScheduledTask task = SchedulerWrapper.runTaskTimer(getPlugin(), player, () -> {
             int time = holdTimers.get(playerUuid);
             ItemStack currentItem = player.getInventory().getItemInMainHand();
 
@@ -151,9 +153,9 @@ public class FightModeManager extends Module implements LifeCycle {
             executeActions(player, countdownActions);
             Message.FIGHT_MODE_DEACTIVATE_DELAY.sendWithReplacement(player, "seconds", timeLeft);
             holdTimers.put(playerUuid, time + 1);
-        }, 0L, 20L);
+        }, 1L, 20L);
 
-        holdTasks.put(playerUuid, taskId);
+        holdTasks.put(playerUuid, task);
     }
 
     public boolean isValidItem(ItemStack item) {
@@ -168,7 +170,7 @@ public class FightModeManager extends Module implements LifeCycle {
 
     public void cancelHoldTask(UUID playerUuid) {
         if (holdTasks.containsKey(playerUuid)) {
-            Bukkit.getScheduler().cancelTask(holdTasks.get(playerUuid));
+            holdTasks.get(playerUuid).cancel();
             holdTasks.remove(playerUuid);
         }
     }

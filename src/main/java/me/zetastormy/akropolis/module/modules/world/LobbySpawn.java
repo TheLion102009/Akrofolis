@@ -33,6 +33,7 @@ import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 
 public class LobbySpawn extends Module implements LifeCycle {
     private boolean spawnJoin;
@@ -44,11 +45,11 @@ public class LobbySpawn extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
+        SchedulerWrapper.runGlobalTaskLater(getPlugin(), () -> {
             FileConfiguration config = getConfig(ConfigType.DATA);
             if (config.contains("spawn"))
                 location = (Location) config.get("spawn");
-        });
+        }, 1L);
 
         spawnJoin = getConfig(ConfigType.SETTINGS).getBoolean("join_settings.spawn_join", false);
     }

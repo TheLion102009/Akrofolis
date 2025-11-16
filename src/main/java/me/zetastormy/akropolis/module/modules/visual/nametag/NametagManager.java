@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -30,11 +30,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -42,7 +44,7 @@ import net.kyori.adventure.text.format.TextColor;
 public class NametagManager extends Module implements LifeCycle {
     private ConfigurationSection format;
     private NametagHelper nametagHelper;
-    private int nametagTask;
+    private ScheduledTask nametagTask;
 
     public NametagManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.NAMETAG);
@@ -56,11 +58,11 @@ public class NametagManager extends Module implements LifeCycle {
         nametagHelper = new NametagHelper();
 
         if (config.getBoolean("nametag.refresh.enabled")) {
-            nametagTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new NametagUpdateTask(this, nametagHelper), 0L,
+            nametagTask = SchedulerWrapper.runGlobalTaskTimer(getPlugin(), new NametagUpdateTask(this, nametagHelper), 1L,
                     config.getLong("nametag.refresh.rate"));
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () ->
+        SchedulerWrapper.runTaskLaterAsync(getPlugin(), () ->
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
                     TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
@@ -72,7 +74,7 @@ public class NametagManager extends Module implements LifeCycle {
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTask(nametagTask);
+        if (nametagTask != null) nametagTask.cancel();
         Bukkit.getOnlinePlayers().forEach(nametagHelper::deleteFormat);
     }
 

@@ -28,8 +28,8 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
 
     implementation("net.megavex:scoreboard-library-api:2.4.1")
-    runtimeOnly("net.megavex:scoreboard-library-implementation:2.4.1")
-    runtimeOnly("net.megavex:scoreboard-library-modern:2.4.1:mojmap")
+    implementation("net.megavex:scoreboard-library-implementation:2.4.1")
+    implementation("net.megavex:scoreboard-library-modern:2.4.1:mojmap")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.23.0")
     compileOnly("net.kyori:adventure-api:4.23.0")
@@ -55,7 +55,7 @@ tasks {
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("Akropolis-${project.version}.jar")
+        archiveFileName.set("Akrofolis-${project.version}.jar")
 
         minimize {
             exclude(dependency("net.megavex:.*:.*"))

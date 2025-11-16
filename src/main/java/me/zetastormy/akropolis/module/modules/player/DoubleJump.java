@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -40,6 +40,7 @@ import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import net.kyori.adventure.text.Component;
 
 public class DoubleJump extends Module implements LifeCycle {
@@ -125,7 +126,7 @@ public class DoubleJump extends Module implements LifeCycle {
 
         GameMode newGameMode = event.getNewGameMode();
         if (newGameMode != GameMode.CREATIVE && newGameMode != GameMode.SPECTATOR) {
-            Bukkit.getScheduler().runTaskLater(getPlugin(), () -> player.setAllowFlight(true), 1L);
+            SchedulerWrapper.runTaskLater(getPlugin(), player, () -> player.setAllowFlight(true), 1L);
         }
     }
 }

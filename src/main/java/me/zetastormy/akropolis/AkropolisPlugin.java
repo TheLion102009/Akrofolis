@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -37,6 +37,7 @@ import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hologram.HologramManager;
 import me.zetastormy.akropolis.module.modules.player.FightModeManager;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
 import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
@@ -58,15 +59,15 @@ public class AkropolisPlugin extends JavaPlugin {
         setInstance(this);
 
         long start = System.currentTimeMillis();
-
-        getLogger().log(Level.INFO, "     _    _                          _ _     ");
-        getLogger().log(Level.INFO, "    / \\  | | ___ __ ___  _ __   ___ | (_)___ ");
-        getLogger().log(Level.INFO, "   / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|");
-        getLogger().log(Level.INFO, "  / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\");
-        getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
-        getLogger().log(Level.INFO, "                        |_|                  ");
-        getLogger().log(Level.INFO, "Author: ZetaStormy");
+        getLogger().log(Level.INFO, "     _    _             _____     _ _     ");
+        getLogger().log(Level.INFO, "    / \\  | | ___ __ ___|  ___|__ | (_)___ ");
+        getLogger().log(Level.INFO, "   / _ \\ | |/ / '__/ _ \\ |_ / _ \\| | / __|");
+        getLogger().log(Level.INFO, "  / ___ \\|   <| | | (_) |  _| (_) | | \\__ \\");
+        getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/|_|  \\___/|_|_|___/");
+        getLogger().log(Level.INFO, "");
+        getLogger().log(Level.INFO, "Author: ZetaStormy (Fork: Thelion102009)");
         getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizzz.");
+        getLogger().log(Level.INFO, "Fully compatible with Paper & Folia 1.21.x");
         getLogger().log(Level.INFO, "--------");
 
         // Check plugin hooks
@@ -112,7 +113,7 @@ public class AkropolisPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTasks(this);
+        SchedulerWrapper.cancelTasks(this);
 
         if (moduleManager != null) moduleManager.unloadModules();
 
@@ -124,7 +125,7 @@ public class AkropolisPlugin extends JavaPlugin {
     }
 
     public void reload() {
-        Bukkit.getScheduler().cancelTasks(this);
+        SchedulerWrapper.cancelTasks(this);
         HandlerList.unregisterAll(this);
 
         configManager.reloadFiles();

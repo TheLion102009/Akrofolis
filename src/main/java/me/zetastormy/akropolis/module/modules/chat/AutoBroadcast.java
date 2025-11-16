@@ -1,9 +1,9 @@
 /*
- * This file is part of Akropolis
+ * This file is part of Akrofolis
  *
  * Copyright (c) 2025 DevBlook Team and others
  *
- * Akropolis free software: you can redistribute it and/or modify
+ * Akrofolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -31,17 +31,19 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XSound;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.scheduler.SchedulerWrapper;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 
 public class AutoBroadcast extends Module implements Runnable, LifeCycle {
     private Map<Integer, List<String>> broadcasts;
-    private int broadcastTask = 0;
+    private ScheduledTask broadcastTask;
     private int count = 0;
     private int size = 0;
     private int requiredPlayers = 0;
@@ -92,14 +94,14 @@ public class AutoBroadcast extends Module implements Runnable, LifeCycle {
 
         size = broadcasts.size();
         if (size > 0) {
-            broadcastTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), this, 60L,
+            broadcastTask = SchedulerWrapper.runGlobalTaskTimer(getPlugin(), this, 60L,
                     announcementsSettings.getLong("delay") * 20);
         }
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTask(broadcastTask);
+        if (broadcastTask != null) broadcastTask.cancel();
     }
 
     @Override
