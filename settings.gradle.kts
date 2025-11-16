@@ -1,1 +1,1 @@
-rootProject.name = "akropolis"
+rootProject.name = "akrofolis"
